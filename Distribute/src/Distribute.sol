@@ -12,6 +12,9 @@ contract Distribute {
     constructor() payable {}
 
     function distributeEther(address[] memory addresses) public {
-        // your code here
+        uint share = address(this).balance / addresses.length;
+        for (uint i = 0; i < addresses.length; i++) {
+            addresses[i].call{value: share}("");
+        }
     }
 }
