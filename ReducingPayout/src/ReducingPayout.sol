@@ -18,6 +18,11 @@ contract ReducingPayout {
     }
 
     function withdraw() public {
-        // your code here
+        uint elapsed = block.timestamp - depositedTime;
+        if (elapsed >= 1 days) {
+            return;
+        }
+        (bool ok,) = msg.sender.call{value: address(this).balance - ((elapsed * 0.0011574 ether) / 100)}("");
+        require(ok);
     }
 }
